@@ -21,8 +21,8 @@
                 </div>
                 
                 <div class="form-group">
-                    {!! Form::label('passowrd', 'Password') !!}
-                    {!! Form::password('passowrd', ['class' => 'form-control']) !!}
+                    {!! Form::label('password', 'Password') !!}
+                    {!! Form::password('password', ['class' => 'form-control']) !!}
                 </div>
                 
                 <div class="form-group">
