@@ -26,7 +26,8 @@
                     <a href="{{ route('users.followings', ['id' => $user->id]) }}">などで
                     ツイート一覧、フォロー一覧、フォロワー一覧ページへ飛ぶ
                     
-                    ルーター先やコントローラ先で変数$idが使えるように連想配列で['id' => $user->id]と定義する-->
+                    ルーター先やコントローラ先で変数$idが使えるように連想配列で['id' => $user->id]と定義する
+                    コントローラのメソッドpublic function followings($id)などで$idを渡す必要があるため-->
                 
                 <li role="presentation" class="{{ Request::is('users/' . $user->id) ? 'active' : '' }}"><a href="{{ route('users.show', ['id' => $user->id]) }}">TimeLine <span class="badge">{{ $count_microposts }}</span></a></li>
                 <li role="presentation" class="{{ Request::is('users/*/followings') ? 'active' : '' }}"><a href="{{ route('users.followings', ['id' => $user->id]) }}">Followings <span class="badge">{{ $count_followings }}</span></a></li>
