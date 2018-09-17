@@ -24,6 +24,8 @@ class UsersController extends Controller
     
     public function show($id) {
         $user = User::find($id);
+        
+        // ->microposts()の処理はUserモデルで定義している
         $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);
         
         $data = [
