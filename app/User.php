@@ -6,6 +6,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Micropost;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -124,5 +126,62 @@ class User extends Authenticatable
         //micropostsテーブルのuser_idカラムで、$follow_user_idsの中のidを含む場合に、すべて取得してreturnする
         return Micropost::whereIn('user_id', $follow_user_ids);
     }
+    
+    
+    
+    
+    public function favoritings() {
+        
+        /*第一引数でfavoriteの対象（ポスト）となるモデルクラスを指定
+            　第二引数で中間テーブルを指定
+            　第三引数で自分のidと紐づけされたカラム名（user_id）を指定
+            　第四引数でお気に入り対象（ポスト）のidと紐づけされたカラム名（follow_id）を指定*/
+        return $this->belongsToMany(Micropost::class, 'favorites', 'user_id', 'micropost_id')->withTimestamps();
+        
+    }
+    
+    
+    
+    /*　favoriteやunfavoriteを行う主体は$userなので、$userが属するモデルに
+        favoriteやunfavoriteの処理を書く必要がある
+        $user->favorite()　$user->unfavorite()など
+    */
+    
+    public function favorite($micropostId) {
+        
+        $exist = $this->is_favoriting($micropostId);
+        
+        if($exist) {
+            return false;
+        } else {
+            $this->favoritings()->attach($micropostId);
+            return true;
+        }
+        
+    }
+    
+    
+    public function unfavorite($micropostId) {
+        
+    $exist = $this->is_favoriting($micropostId);
+        
+    if($exist) {
+            $this->favoritings()->detach($micropostId);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+        
+    public function is_favoriting($micropostId) {
+            return $this->favoritings()->where('micropost_id', $micropostId)->exists();
+        /*where(A, B) 　A = B
+        　$thisがお気に入りしている投稿のfollow_id = $micropostId　
+        　where() だけではクエリを作成しただけで、実行されないので実行文exists()が必要*/
+        
+        
+    }
+    
 
 }

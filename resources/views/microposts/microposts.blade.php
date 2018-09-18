@@ -13,12 +13,10 @@
                 <p>{!! nl2br(e($micropost->content)) !!}</p>
             </div>
             <div>
-                <!-- 現在ログインしてるユーザーのidとマイクロポストのユーザーidが一致した場合 -->
-                @if (Auth::id() == $micropost->user_id)
-                    {!! Form::open(['route' => ['microposts.destroy', $micropost->id], 'method' => 'delete']) !!}
-                        {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) !!}
-                    {!! Form::close() !!}
-                @endif
+                
+                @include('favorite_posts.favorite_button',['micropost' => $micropost])
+                
+                @include('microposts.delete_button', ['micropost' => $micropost])
             </div>
         </div>
     </li>

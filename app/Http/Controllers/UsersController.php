@@ -28,9 +28,11 @@ class UsersController extends Controller
         // ->microposts()の処理はUserモデルで定義している
         $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);
         
+        
         $data = [
             'user' => $user,
             'microposts' => $microposts,
+            
             ];
             
         $data += $this->counts($user);
@@ -76,5 +78,11 @@ class UsersController extends Controller
             
             return view('users.followers', $data);
     }
+    
+    
+    
+    
+    
+
     
 }

@@ -27,12 +27,23 @@ Route::group(['middleware' => 'auth'], function () {
         Route::delete('unfollow', 'UserFollowController@destroy')->name('user.unfollow');
         Route::get('followings', 'UsersController@followings')->name('users.followings');
         Route::get('followers', 'UsersController@followers')->name('users.followers');
-    });
         
         /*['prefix' => 'users/{id}']で、このグループのルーティングではURLの最初にusers/{id}が付く
         　例：～～～.com/users/125/follow　id：125のユーザをフォロー
         　例：～～～.com/users/125/followings　id：125のユーザがフォローしているユーザ達を表示
         　{id}の中はフォローやアンフォローの対象となるuserのid*/
+    
+        Route::post('favorite', 'FavoriteController@store')->name('post.favorite');
+        Route::delete('unfavorite', 'FavoriteController@destroy')->name('post.unfavorite');
+        Route::get('favoritings', 'FavoriteController@favorites')->name('users.favorites');
+        
+        
+    });    
+    
+    
+        
+   
+        
     
     Route::resource('microposts', 'MicropostsController', ['only' => ['store', 'destroy']]);
 });
