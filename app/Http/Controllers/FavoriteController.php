@@ -31,7 +31,7 @@ class FavoriteController extends Controller
         $user = User::find($id);
         
         //　->favoritings()の処理はUserモデルで定義している
-        $favorites = $user->favoritings()->paginate(10);
+        $favorites = $user->favoritings()->orderBy('created_at', 'desc')->paginate(10);
         $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);
         
         
